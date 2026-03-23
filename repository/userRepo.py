@@ -99,7 +99,7 @@ class DbUserRepo(DbRepository[User], UserRepo):
                 cur.execute(sql, (entity_id,))
 
     def list_all(self) -> List[User]:
-        sql = "SELECT id, email, nickname, password_hash, created_at FROM users WHERE email = %s"
+        sql = "SELECT id, email, nickname, password_hash, created_at FROM users"
         with self._get_conn() as conn:
             with conn.cursor() as cur:
                 cur.execute(sql)

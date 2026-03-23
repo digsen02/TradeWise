@@ -45,6 +45,7 @@ def login():
     try:
         user = auth_service.login(email, password)
     except AuthError as e:
+        print(e.message)
         return jsonify({"message": e.message}), e.status_code
 
     access_token = create_access_token(identity={"id": user.id, "email": user.email})

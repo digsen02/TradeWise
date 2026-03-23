@@ -35,14 +35,19 @@ class DbRepository(Repository[T], ABC):
     dotenv.load_dotenv()
 
     def __init__(self,
-                 host: str = os.getenv("HOST"),
-                 port: int = os.getenv("PORT"),
-                 user: str = os.getenv("USER"),
-                 password: str = os.getenv("PASSWORD"),
-                 db: str = os.getenv("DB")):
+                 host: str | None = None,
+                 port: int | None = None,
+                 user: str | None = None,
+                 password: str | None = None,
+                 db: str | None = None):
+        host = host if host is not None else os.getenv("HOST")
+        _port = port if port is not None else os.getenv("PORT", "3306")
+        user = user if user is not None else os.getenv("USER")
+        password = password if password is not None else os.getenv("PASSWORD")
+        db = db if db is not None else os.getenv("DB")
         self._conn_params = {
             "host": host,
-            "port": port,
+            "port": int(_port),
             "user": user,
             "password": password,
             "database": db,
